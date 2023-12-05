@@ -20,17 +20,17 @@ class Grid:
         for index, row in enumerate(grid_string.split()):
             self.grid.append(self.build_row(row, index))
 
-    def build_row(self, row_string, column_index):
-        return [self.build_node(i, column_index) for i in self.grid_row_regex.finditer(row_string) if i is not None and i != '']
+    def build_row(self, row_string, row_index):
+        return [self.build_node(i, row_index) for i in self.grid_row_regex.finditer(row_string) if i is not None and i != '']
 
     def append_row(self, row_string):
         self.grid.append(self.build_row(row_string, len(self.grid) - 1))
 
-    def build_node(self, m: re.Match, column_index) -> Node:
+    def build_node(self, m: re.Match, row_index) -> Node:
         if m.group(0).isdigit():
-            return Number(m, column_index)
+            return Number(m, row_index)
         else:
-            return Symbol(m, column_index)
+            return Symbol(m, row_index)
         
     def __str__(self):
         return str([[str(node) for node in row] for row in self.grid])
